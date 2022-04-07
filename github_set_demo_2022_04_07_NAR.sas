@@ -11,13 +11,10 @@
 
 *The regression estimates will be presented in Table 2; 
 
-title "Outcome adjusted for patient demographic variable 2 with random intercepts ";
+title "Outcome adjusted for patient demographic variable 2 without random intercepts ";
 proc glimmix data= work ;
 class pt_demog_var1 (ref="Group A");
 model outcome (event="1") = pt_demog_var1 pt_demog_var2 /cl dist=poisson link=log solution;
-random intercept / subject =hospital_var type=cs solution cl;
-random intercept / subject =provider_var type=cs solution cl;
-
 estimate 'RR Group B vs. Group A' pt_demog_var1 0 1 0 0 0 0 -1/ exp cl;
 estimate 'RR Group C vs. Group A' pt_demog_var1 0 0 1 0 0 0 -1/ exp cl;
 estimate 'RR one-unit change pt_demog_var2' pt_demog_var2 1 / exp cl;
